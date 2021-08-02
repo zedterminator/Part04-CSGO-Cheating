@@ -123,7 +123,8 @@ long __stdcall hkEndScene(LPDIRECT3DDEVICE9 pDevice)
 	if (show_menu)
 	{
 		ImGui::Begin("Le Dung Hacking");
-		ImGui::Text("ESP settings");
+		ImGui::Spacing();
+		ImGui::Text("ESP Settings");
 		ImGui::Checkbox("ESP", &esp);
 
 		ImGui::Spacing();
@@ -139,11 +140,10 @@ long __stdcall hkEndScene(LPDIRECT3DDEVICE9 pDevice)
 		}
 
 		ImGui::Spacing();
-
 		ImGui::Separator();
-		ImGui::Text("Triggerbot settings");
+		ImGui::Text("TriggerBot Settings");
 		ImGui::Checkbox("Enabled", &triggerbot);
-		if (triggerbot)
+		if (true)
 		{
 			ImGui::Spacing();
 			ImGui::Checkbox("Enable Custom Delay", &triggerDelay);
@@ -152,7 +152,7 @@ long __stdcall hkEndScene(LPDIRECT3DDEVICE9 pDevice)
 				ImGui::SliderInt("Custom Delay (ms)", &triggerCustomDelay, 0, 250);
 			}
 			else {
-				ImGui::Checkbox("Random delay", &triggerRandomess);
+				ImGui::Checkbox("Random Delay", &triggerRandomess);
 			}
 		}
 		ImGui::End();
@@ -231,7 +231,7 @@ DWORD WINAPI TriggerThread(LPVOID lp)
 				{
 					if (triggerRandomess)
 					{
-						Sleep((rand() * 250) + 50);
+						Sleep((rand() * 250) + 50); 
 						*(int*)(gameModule + dwForceAttack) = 5;
 						Sleep(20);
 						*(int*)(gameModule + dwForceAttack) = 4;
@@ -251,8 +251,8 @@ DWORD WINAPI TriggerThread(LPVOID lp)
 					}
 				}
 			}
+
 		}
-		Sleep(2);
 	}
 }
 
@@ -308,7 +308,7 @@ BOOL WINAPI DllMain(HMODULE hMod, DWORD dwReason, LPVOID lpReserved)
 		CreateThread(nullptr, 0, MainThread, hMod, 0, nullptr);
 		CreateThread(nullptr, 0, BhopThread, hMod, 0, nullptr);
 		CreateThread(nullptr, 0, RecoilThread , hMod, 0, nullptr);
-		CreateThread(nullptr, 0, TriggerThread, hMod, 0, nullptr);
+		CreateThread(nullptr, 0, TriggerThread , hMod, 0, nullptr);
 		break;
 	case DLL_PROCESS_DETACH:
 		kiero::shutdown();
